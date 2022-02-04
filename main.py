@@ -13,11 +13,46 @@ import sys, os
 import ffmpeg
 import eyed3
 
+class MyWindow(QMainWindow):
+    def __init__(self):
+        super(MyWindow,self).__init__()
+        self.setGeometry(150, 150, 400, 300)
+        self.setWindowTitle("Godlike Video Converter")
+        self.initUI()
+
+    def initUI(self):
+        self.label = QtWidgets.QLabel(self)
+        self.label.setText("Version 0.0")
+
+        self.b1= QtWidgets.QPushButton(self)
+        self.b1.setText("convert")
+        self.b1.clicked.connect(self.convert)
+
+    def convert():
+        base_dir = "D:/Converter/Copied/"
+        converted_dir = "D:/Converter/Converted/"
+        to_convert = os.listdir(path=base_dir)
+        for x in to_convert:
+            video_file = base_dir + x
+            audio_file = converted_dir + x + '.mp3'
+            cmd = "ffmpeg -i {} -vn {}".format(video_file, audio_file)
+            os.system(cmd)
+
+
+def convert():
+    base_dir = "D:/Converter/Copied/"
+    converted_dir = "D:/Converter/Converted/"
+    to_convert = os.listdir(path=base_dir)
+    for x in to_convert:
+        video_file = base_dir + x
+        audio_file = converted_dir + x + '.mp3'
+        cmd = "ffmpeg -i {} -vn {}".format(video_file, audio_file)
+        os.system(cmd)
+
 def window():
     app=QApplication(sys.argv)
-    win=QMainWindow()
-    win.setGeometry(150,150,400,300)
-    win.setWindowTitle("Godlike Video Converter")
+    win=MyWindow()
+
 
     win.show()
     sys.exit(app.exec())
@@ -42,15 +77,7 @@ def get_thumbnail():
         os.system(cmd)
 
 
-def convert():
-    base_dir = "D:/Converter/Copied/"
-    converted_dir = "D:/Converter/Converted/"
-    to_convert = os.listdir(path=base_dir)
-    for x in to_convert:
-        video_file = base_dir + x
-        audio_file = converted_dir + x + '.mp3'
-        cmd="ffmpeg -i {} -vn {}".format(video_file,audio_file)
-        os.system(cmd)
+
 
 
 
@@ -72,11 +99,11 @@ def add_cover_art():
 
 
 
-rename()
-get_thumbnail()
-convert()
-add_cover_art()
-#window()
+# rename()
+# get_thumbnail()
+# convert()
+# add_cover_art()
+window()
 
 
 
